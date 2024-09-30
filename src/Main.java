@@ -1,6 +1,8 @@
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import modelos.Endereco;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -12,7 +14,7 @@ public class Main {
     public static void main(String[] args) throws IOException, InterruptedException {
 
         Scanner leitura = new Scanner(System.in);
-        Gson gson = new GsonBuilder().create();
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
         System.out.println("*******************************************");
         System.out.println("Bem vindo à aplicação de consultas de CEPs");
@@ -43,7 +45,12 @@ public class Main {
 
         } else {
 
-
+            Endereco meuEndereco = gson.fromJson(json, Endereco.class);
+            System.out.println(meuEndereco);
+            FileWriter escrita =new FileWriter("enderecosBrasil.json");
+            escrita.write(gson.toJson(meuEndereco));
+            escrita.close();
+            System.out.println("Processo finalizado");
 
         }
 
